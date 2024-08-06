@@ -1,31 +1,38 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// importing node modules as variables
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./app_server/routes/index');
-var usersRouter = require('./app_server/routes/users');
-var travelRouter = require('./app_server/routes/travel');
-// Define handlabars variable
-var handlebars = require('hbs');
+const indexRouter = require('./app_server/routes/index');
+const usersRouter = require('./app_server/routes/users');
+const travelRouter = require('./app_server/routes/travel');
+// Define handlabars constiable
+const handlebars = require('hbs');
 
-var app = express();
+const app = express();
 
 // view engine setup
+// __dirname is an environment variable in node.js that tells you the absolute path of the directory containing the currently executing file.
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 
 // register handlebars partials
-handlebars.registerPartial('myPartial', './app_server/views/partials');
+// handlebars.registerPartials('myPartial', './app_server/views/partials');
+handlebars.registerPartials(__dirname + "/app_server/views/partials");
 
 app.set('view engine', 'hbs');
 
+// middleware - asynchronous
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// parses out any of the cookie information, and attaches the data to the request in a way that
+// makes it easy to reference in the controller code.
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// matching request against a route
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
