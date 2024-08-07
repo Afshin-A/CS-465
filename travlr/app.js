@@ -12,6 +12,7 @@ const travelRouter = require('./app_server/routes/travel');
 const handlebars = require('hbs');
 
 const app = express();
+// app.listen
 
 // view engine setup
 // __dirname is an environment variable in node.js that tells you the absolute path of the directory containing the currently executing file.
@@ -23,6 +24,10 @@ handlebars.registerPartials(__dirname + "/app_server/views/partials");
 
 app.set('view engine', 'hbs');
 
+
+// Not working
+// app.set('layout', 'layouts/layout'); // Set default layout
+
 // middleware - asynchronous
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,12 +35,18 @@ app.use(express.urlencoded({ extended: false }));
 // parses out any of the cookie information, and attaches the data to the request in a way that
 // makes it easy to reference in the controller code.
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 // matching request against a route
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
+
+// This line makes it possible to serve static content from the public directory 
+// IMPORTANT: This should be after the routes, otherwise static pages get precedence over dynamic routes
+// For example, the url localhost:300/ would deliver index.html in the public folder instead of index.hbs in views
+app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

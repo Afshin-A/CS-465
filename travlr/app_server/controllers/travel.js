@@ -9,6 +9,7 @@ const fs = require('fs');
 var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
 
 const travel = (reg, res) => {
+    console.log('Rendering travel page');
     res.render('travel', {title: "Travl Getaways", trips});
 };
 
