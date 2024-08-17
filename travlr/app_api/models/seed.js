@@ -1,4 +1,4 @@
-// contains the script for entering the seed data into MongoDB instance
+// contains the script for entering the seed data (the initial data) into MongoDB instance
 
 // import mongodb connection
 const Mongoose = require('./db');

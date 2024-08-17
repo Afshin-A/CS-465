@@ -1,3 +1,5 @@
+This file contains notes from the Loc8r app from the Getting MEAN book. These are good notes, but don't exactly apply to the travlr project. db.js in models has the actual code for travlr. 
+```js
 // this file is about setting up the mongodb connection logic
 // we import this file in app.js, therefore executing all its content
 
@@ -71,3 +73,5 @@ mongoose.connection.on('disconnected', () => {
 
 // adding the schema to the application
 require('./locations_schema');
+```
+

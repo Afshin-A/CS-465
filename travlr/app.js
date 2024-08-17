@@ -4,8 +4,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// initiating database connection and handling errors, shutdown, etc.
+require('./app_api/models/db');
 
+// API router
+const apiRouter = require('./app_api/routes/index');
+// View routers
 const indexRouter = require('./app_server/routes/index');
+// TODO: Remove this
 const usersRouter = require('./app_server/routes/users');
 const travelRouter = require('./app_server/routes/travel');
 // Define handlabars constiable
@@ -42,6 +48,9 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
+
+// api router
+app.use('/api', apiRouter);
 
 // This line makes it possible to serve static content from the public directory 
 // IMPORTANT: This should be after the routes, otherwise static pages get precedence over dynamic routes

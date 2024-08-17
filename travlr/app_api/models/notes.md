@@ -1,0 +1,1 @@
+We moved the models folder from app_server to app_api becaue it is the api that deals with database, not the express application
