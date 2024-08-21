@@ -12,6 +12,8 @@ const travel = (reg, res) => {
 };
 */
 
+const request = require('request');
+
 // using the fetch api to retrieve the data we need to render views from our database instead of a static file
 const tripsEndpoint = 'http://localhost:3000/api/trips';
 const options = {

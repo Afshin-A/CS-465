@@ -1,0 +1,17 @@
+<div class="card" style="width: 16rem;">
+    <div class="card-header">{{ trip.name }}</div>
+    <img src="assets/images/{{ trip.image }}" alt="trip thumbnail" class="card-img-top">
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">
+            {{ trip.resort }}
+        </h6>
+        <p class="card-subtitle mt-3 mb-3 text-muted">
+            {{trip.length}} only {{trip.perPerson|currency:'USD':true}} per person
+        </p>
+
+        <!-- [innerHTML] dynamically links the innerHTML property of this <p> tag with the value trip.description, as provided in
+            the constructor for the trip-card component, such that if changes are made in the data, the changes are reflected in both
+            the html file as well as the component (.ts file) -->
+        <p class="card-text" [innerHTML]="trip.description"></p>
+    </div>
+</div>

@@ -52,6 +52,16 @@ app.use('/travel', travelRouter);
 // api router
 app.use('/api', apiRouter);
 
+// allowing the angular SAP to access the express API
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+// this is also supposed to enable CORS, but not sure
+// app.use(cors({origin: ''}));
+
 // This line makes it possible to serve static content from the public directory 
 // IMPORTANT: This should be after the routes, otherwise static pages get precedence over dynamic routes
 // For example, the url localhost:300/ would deliver index.html in the public folder instead of index.hbs in views
