@@ -22,10 +22,11 @@
 					<div>
 						<div class="body">
 							<h1>Travel</h1>
+							<p>{{message}}</p>
 							<ul id="sites">
 								{{#each trips}}
 									<li>
-										<a href="/api/trips/code/{{this.code}}"><img src="images/{{this.image}}" alt="Img"></a>
+										<a href="/api/trips/code/{{this.code}}"><img src="images/{{{this.image}}}" alt="Img"></a>
 										<h2><a href="/travel">{{this.name}}</a></h2>
 										{{{this.description}}}
 										<p>Test</p>

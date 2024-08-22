@@ -4,6 +4,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
+// this is also supposed to enable CORS, but not sure
+
+
 // initiating database connection and handling errors, shutdown, etc.
 require('./app_api/models/db');
 
@@ -34,6 +38,14 @@ app.set('view engine', 'hbs');
 // Not working
 // app.set('layout', 'layouts/layout'); // Set default layout
 
+app.use(cors({
+  origin: 'http://localhost:4200', // Specify the allowed origin
+  methods: 'GET,POST,PUT,DELETE,OPTIONS', // Allows specific methods
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept', // Allows specific headers
+  credentials: true // Include credentials like cookies in the request
+}));
+
+
 // middleware - asynchronous
 app.use(logger('dev'));
 app.use(express.json());
@@ -52,15 +64,14 @@ app.use('/travel', travelRouter);
 // api router
 app.use('/api', apiRouter);
 
-// allowing the angular SAP to access the express API
-app.use('/api', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// allowing the angular SAP to access the express API. does not work?
+// app.use('/api', (req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
-// this is also supposed to enable CORS, but not sure
-// app.use(cors({origin: ''}));
+
 
 // This line makes it possible to serve static content from the public directory 
 // IMPORTANT: This should be after the routes, otherwise static pages get precedence over dynamic routes

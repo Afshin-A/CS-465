@@ -1,4 +1,4 @@
-<div class="card" style="width: 16rem;">
+<div class="card">
     <div class="card-header">{{ trip.name }}</div>
     <img src="assets/images/{{ trip.image }}" alt="trip thumbnail" class="card-img-top">
     <div class="card-body">
@@ -13,5 +13,8 @@
             the constructor for the trip-card component, such that if changes are made in the data, the changes are reflected in both
             the html file as well as the component (.ts file) -->
         <p class="card-text" [innerHTML]="trip.description"></p>
+        <div>
+            <button (click)="editTrip(trip)" class="btn btn-info">Edit Trip</button>
+        </div>
     </div>
 </div>

@@ -46,19 +46,20 @@ const travel = async function(req, res, next) {
     await fetch(tripsEndpoint, options)
         .then(res => res.json())
         .then(json => {
+            let message = '';
             if (!(json instanceof Array)) {
                 message = 'API lookup error';
                 json = [];
-            }
-            else {
+            } else {
                 if (!json.length) {
                     message = 'No trips exist in our database';
                 }
             }
-            res.render('travel', {title: 'Travlr Getaways', trips: json, message})
+            res.render('travel', {title: 'Travlr Getaways', trips: json, message});
         })
-        .catch(err => res.status(500).send(e.message));
+        .catch(err => res.status(500).send(err.message));
 };
+
 
 module.exports = {
     travel
