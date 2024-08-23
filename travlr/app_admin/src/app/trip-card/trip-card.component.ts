@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Trip } from '../models/trips';
 
+import { AuthenticationService } from '../services/authentication.service';
+
 @Component({
   selector: 'app-trip-card',
   standalone: true,
@@ -13,7 +15,7 @@ import { Trip } from '../models/trips';
 export class TripCardComponent implements OnInit {
   // this is an input property, meaning the parent component (i.e TripListingComponent) can pass data into it.
   @Input('trip') trip: any;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) { }
   ngOnInit(): void {
   }
 
@@ -21,5 +23,9 @@ export class TripCardComponent implements OnInit {
     localStorage.removeItem('tripCode');
     localStorage.setItem('tripcode', trip.code);
     this.router.navigate(['edit-trip']);
+  }
+
+  public isLoggedIn() {
+    return this.authenticationService.isLoggedIn();
   }
 }

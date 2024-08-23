@@ -12,6 +12,7 @@ import { TripDataService } from '../services/trip-data.service';
 import { TripCardComponent } from '../trip-card/trip-card.component';
 
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
 
 // this a decorator. It marks the TripListingComponent as a decorator. It also provides meta data 
 @Component({
@@ -28,7 +29,7 @@ export class TripListingComponent implements OnInit {
   // exporting trips allows us to access it in html file using {{trips}}
   // variableName: variableType = value
   trips: Array<any> = trips;
-  constructor(private tripDataService: TripDataService, private router: Router) {
+  constructor(private tripDataService: TripDataService, private router: Router, private authenticationService: AuthenticationService) {
     console.log('trip-lisiting constructor');
   }
 
@@ -52,6 +53,10 @@ export class TripListingComponent implements OnInit {
 
   public addTrip(): void {
     this.router.navigate(['add-trip']);
+  }
+
+  public isLoggedIn() {
+    return this.authenticationService.isLoggedIn();
   }
 
 

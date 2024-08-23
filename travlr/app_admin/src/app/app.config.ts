@@ -6,12 +6,14 @@ import { provideHttpClient } from '@angular/common/http';
 // importing routes of the applicatin pages
 import { routes } from './app.routes';
 
+import { authInterceptProvider } from './utils/jwt.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     // setting the routes
     provideRouter(routes),
     // This sets up Angular's HttpClient service, which is used to make HTTP requests to external APIs or servers.
-    provideHttpClient()
+    provideHttpClient(),
+    authInterceptProvider
   ]
 };

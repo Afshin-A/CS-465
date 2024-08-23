@@ -11,6 +11,13 @@ const cors = require('cors');
 // initiating database connection and handling errors, shutdown, etc.
 require('./app_api/models/db');
 
+// reads all the enviroment (.env) files 
+require('dotenv').config();
+
+// Wire in our authentication module
+var passport = require('passport');
+require('./app_api/config/passport');
+
 // API router
 const apiRouter = require('./app_api/routes/index');
 // View routers
@@ -23,6 +30,8 @@ const handlebars = require('hbs');
 
 const app = express();
 // app.listen
+
+
 
 // view engine setup
 // __dirname is an environment variable in node.js that tells you the absolute path of the directory containing the currently executing file.
@@ -41,7 +50,7 @@ app.set('view engine', 'hbs');
 app.use(cors({
   origin: 'http://localhost:4200', // Specify the allowed origin
   methods: 'GET,POST,PUT,DELETE,OPTIONS', // Allows specific methods
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept', // Allows specific headers
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization', // Allows specific headers
   credentials: true // Include credentials like cookies in the request
 }));
 
@@ -77,21 +86,30 @@ app.use('/api', apiRouter);
 // IMPORTANT: This should be after the routes, otherwise static pages get precedence over dynamic routes
 // For example, the url localhost:300/ would deliver index.html in the public folder instead of index.hbs in views
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(passport.initialize());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
+
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  if(err.name == 'UnauthorizedError') {
+    res.status(401).json({
+      "message": err.name + ": " + err.message
+    });
+  }
+  else {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+  }
 });
 
 module.exports = app;
