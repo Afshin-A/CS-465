@@ -24,6 +24,7 @@ The SPA design is very fast and lightweight. However, it has a few downsides: in
 
 # System Architecture
 ## Component View
+![component diagram](/diagrams/component%20diagram.png )
 The diagram above highlights the necessary components in the Travlr Getaways application. 
 -	Client
 	-	Client Session – Responsible for managing user sessions
@@ -41,12 +42,13 @@ Once the user is authenticated through Authentication Server and Server Session,
   - MongoDB – Stores application data
 
 ## Sequence Diagram 
+![sequence diagram](/diagrams/sequence%20diagram.png )
 A typical use case of our web application is as follows:
 A customer wishes to reach a particular endpoint (resource) on our website. He or she will need to open a browser and enters the URL to that end point. In effect, the customer sends a request to access an end point on our backend server. The Node.js application (i.e. our backend server) processes this request by passing it through a sequence of middleware functions that are responsible for tasks such as logging, encoding the URL, extracting cookie information, and more. The request will then match against the router for the URL. The router uses a controller to process the request. The controller contains the logic to connect to the database. With the connection previously established, the controller calls appropriate methods on the data model. This process performs queries on the database an retrieve the requested data. The controller then generates a JSON response and sends it back to the client. At this stage, a view engine will use the response and render the page that the user sees.
 
 ## Class Diagram
 This section illustrates the JavaScript classes of the web application via a class diagram for the web application.
-
+![class diagram](/diagrams/class%20diagram.png )
 Starting from the top right side, the diagram depicts the CruiseInfo, FlightInfo, and HotelInfo classes. These classes inherit common characteristics such as the trip date range and destination from the Trip Info class. In addition, the “Info” classes form an aggregation relationship with the Itinerary class, contributing to new information such as the total cost of the trip, total miles traveled, etc. Aggregation is a weak have-a type of relationship, meaning that while they constitute the class Itinerary, they can function independently. Each of the three “Info” classes each have a dependency-type of relationship with their respective “Booking” class. For example, the HotelBooking class uses information from the HotelInfo class as well as the TravelerInfo class to book a hotel. The FlightBooking and CruiseBooking classes have a similar relationship with FlightInfo and CruiseInfo, respectively. Next in the diagram, we have the MemberAccount and Membership_Admin classes that form a generalization (inheritance) relationship. These classes store user information: member number, status, club, frequently used airline, and number of companions. The TravelerInfo class has a aggregation relationship with Membership_Admin. It stores customer financial information, reward programs, and payment validation. Previously, we discussed how this information gets used to book flights, hotels, and cruises. Finally, the centerpiece of the diagram is the class that connects everything together: TravelAgent. This class uses the customers’ information (including payment), itinerary information (hotels, cruises, flights), and makes reservations. 
 
 # Express API Endpoints and Methods
@@ -58,6 +60,13 @@ Starting from the top right side, the diagram depicts the CruiseInfo, FlightInfo
 # User Interface
 This section discusses the user interface in the front-end application for Travlr system administrators. The following screenshots showcase the different pages of the application.
 Figure 1 features the home page. This screen provides a list of the travel packages Travlr offers. When logged in, admins will have access to the add trip button. Clicking on this button will open a new page, where a new package can be configured and added to the database. Upon clicking the “save button”, the new package will appear in the home page. This screen is featured in figure 2.
+
+![figure 1](/diagrams/home%20page.png )
+Figure 1
+
+![figure 2](/diagrams/add%20trip.png )
+
+Figure 2
 
 Admins will also have access to an edit button under each travel package. Here, they can update the information for each package. 
 
